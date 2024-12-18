@@ -7,6 +7,9 @@ project("Euronext Router")
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)  # Use C++17 or the desired version
 
+# Specify the include directory for headers
+include_directories(src/include)
+
 # Specify the include directory for librdkafka
 include_directories(/opt/homebrew/include)
 
@@ -14,7 +17,7 @@ include_directories(/opt/homebrew/include)
 link_directories(/opt/homebrew/lib)
 
 # Add the source file
-add_executable(euronext-router src/main.cpp)
+add_executable(euronext-router src/main.cpp src/utils/producer.cpp)
 
 # Link the librdkafka library
 target_link_libraries(euronext-router rdkafka)
