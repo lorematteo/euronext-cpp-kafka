@@ -17,7 +17,7 @@ include_directories(/opt/homebrew/include)
 link_directories(/opt/homebrew/lib)
 
 # Add the source file
-add_executable(euronext-router src/main.cpp src/utils/producer.cpp)
+add_executable(euronext-router src/main.cpp src/utils/producer.cpp src/utils/consumer.cpp)
 
 # Link the librdkafka library
 target_link_libraries(euronext-router rdkafka)
