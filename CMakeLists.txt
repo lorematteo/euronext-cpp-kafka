@@ -8,4 +8,4 @@ project("Euronext Router")
 set(CMAKE_CXX_STANDARD 17)  # Use C++17 or the desired version
 
 # Add the source file
-add_executable(euronext-router main.cpp)
+add_executable(euronext-router src/main.cpp)
