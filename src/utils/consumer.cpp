@@ -3,12 +3,6 @@
 #include <cstring>
 #include <signal.h>
 
-static volatile sig_atomic_t run = 1;
-
-static void sigterm(int sig) {
-    run = 0;
-}
-
 Consumer::Consumer(const std::string &brokers, const std::string &topic) {
     std::string brokers_value = brokers;
     std::string topic_value = topic;
@@ -41,10 +35,6 @@ Consumer::Consumer(const std::string &brokers, const std::string &topic) {
         rd_kafka_conf_destroy(conf);
         exit(1);
     }
-
-    /* Set up signal handler for clean shutdown */
-    signal(SIGINT, sigterm);
-    signal(SIGTERM, sigterm);
 }
 
 Consumer::~Consumer() {
@@ -56,7 +46,7 @@ Consumer::~Consumer() {
 }
 
 void Consumer::consumeMessages() {
-    while (run) {
+    while (run.load()) {
         rd_kafka_message_t *msg;
 
         msg = rd_kafka_consumer_poll(rk, 1000);  // Poll with a timeout of 1000ms
@@ -69,4 +59,8 @@ void Consumer::consumeMessages() {
             rd_kafka_message_destroy(msg);
         }
     }
+}
+
+void Consumer::stop() {
+    run.store(false); // Signal consumer to stop
 }
