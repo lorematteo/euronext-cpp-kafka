@@ -1,6 +1,7 @@
 #ifndef CONSUMER_H
 #define CONSUMER_H
 
+#include <atomic>
 #include <librdkafka/rdkafka.h>
 #include <string>
 
