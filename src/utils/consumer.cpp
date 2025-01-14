@@ -38,11 +38,11 @@ Consumer::Consumer(const std::string &brokers, const std::string &topic) {
 }
 
 Consumer::~Consumer() {
+    rd_kafka_consumer_close(rk);
+    
     /* Clean up resources */
     rd_kafka_topic_partition_list_destroy(topic_list);
-    rd_kafka_unsubscribe(rk);
     rd_kafka_destroy(rk);
-    rd_kafka_conf_destroy(conf);
 }
 
 void Consumer::consumeMessages() {
